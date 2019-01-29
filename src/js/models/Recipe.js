@@ -110,14 +110,21 @@ export default class Recipe {
 
 	updateServings (type) {
 		//servings
-		const newServings = type === 'dec' ? this.servings -1: this.servings +1;
+		// const newServings = type === 'dec' ? this.servings -1: this.servings +1;
+		let newServings;
+		// the smallest number of servings is 1
+		if (type === 'dec') {
+			newServings = this.servings > 1 ? this.servings -1 : this.servings;
+		} else {
+			newServings = this.servings +1;
+		}
+
 		//ingredients
 		this.ingredients.forEach (ing => {
 			// const num = new Fraction(ing.count * (newServings/this.servings)).simplify(0.00001);
 			// ing.count = num.toFraction(true);
-			if (this.servings > 0) {
-				ing.count *= newServings/this.servings;
-			}
+			ing.count *= newServings/this.servings;
+
 		})
 		this.servings = newServings;
 	}
